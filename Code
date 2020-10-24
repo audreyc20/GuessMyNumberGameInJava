@@ -1,0 +1,113 @@
+import java.util.Scanner;
+import java.util.Random;
+
+class Main {
+  //assign variables
+  static double num = 0;
+  static boolean gameOver = false;
+  static double numOfGuesses = 0;
+  static double guess = 0;
+  static int answer = 2;
+  static Scanner userGuess = new Scanner(System.in);
+
+  public static void main(String[] args) {
+    assignNumber();
+    userPlay();
+    playAgain();
+  }
+
+  public static void assignNumber() {
+    System.out.println();
+    System.out.println();
+    System.out.println("I am thinking of a number from 1 to 100.");
+    System.out.println("You have 7 guesses to find my number.");
+    
+    //assigns the number
+    Random randomNum = new Random(); 
+    num = randomNum.nextInt(100);
+  }
+
+  public static void userPlay() {
+    //while loop so they have seven guesses
+    while (gameOver == false) {
+      //checks if they are out of guesses
+      if (numOfGuesses >= 7) {
+        System.out.println("You are out of guesses.");
+        System.out.println("You lost");
+        System.out.println("The number was: " + num);
+        System.out.println();
+        System.out.println();
+        gameOver = true;
+        break;
+      }
+
+      //asks the user to make a guess
+      System.out.println();
+      System.out.println("Guess my number:");
+      guess = userGuess.nextInt();
+      System.out.println("Guess: " + guess);
+
+
+    //sees if guess is too high
+      if (num > guess) {
+        System.out.println("Your guess is too low.");
+        gameOver = false;
+        numOfGuesses = numOfGuesses + 1;
+      }
+      
+      //sees if guess is too low
+      else if (num < guess) {
+        System.out.println("Your guess is too high.");
+        gameOver = false;
+        numOfGuesses = numOfGuesses + 1;
+      }
+      
+      //sees if guess is correct
+      else {
+        System.out.println("Good job!");
+        System.out.println("Your guess is correct!");
+        System.out.println();
+        System.out.println();
+        gameOver = true;
+        numOfGuesses = numOfGuesses + 1;
+        break;
+      }
+    }
+  }
+
+  public static void playAgain() {
+    System.out.println("Would you like to play again?");
+    System.out.println("Type '1' for yes and '0' for no");
+    System.out.println();
+
+    //lets user enter answer
+    answer = userGuess.nextInt();
+
+    //sees what to do with their answer
+    if (answer == 1) {
+      System.out.println();
+      System.out.println();
+
+      //reset varriables
+      num = 0;
+      gameOver = false;
+      numOfGuesses = 0;
+      guess = 0;
+      answer = 2;
+
+      //call functions
+      assignNumber();
+      userPlay();
+      playAgain();
+    } 
+    else if (answer == 0) {
+      System.out.println("Good game! Play again soon.");
+    } 
+    else {
+      System.out.println("Invalid answer. Please enter 1 or 0.");
+      System.out.println();
+      System.out.println();
+      playAgain();
+    }
+  }
+}
